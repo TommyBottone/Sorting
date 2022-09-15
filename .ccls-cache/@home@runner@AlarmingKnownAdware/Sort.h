@@ -1,7 +1,9 @@
+#include "SmartPtr.h"
 #include <iostream>
 #include <vector>
 
-class Sort {
+class Sort: public SmartPtr<Sort>
+{
 public:
   Sort();
   ~Sort();
@@ -11,7 +13,6 @@ public:
   std::vector<int> doSelectionSort(std::vector<int> list);
   std::vector<int> doMergeSort(std::vector<int> list);
   std::vector<int> doQuickSort(std::vector<int> list);
-
 
 private:
   void mergeHelper(std::vector<int> &list, int p, int r);

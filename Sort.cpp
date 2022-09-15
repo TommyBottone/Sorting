@@ -4,7 +4,8 @@ Sort::Sort() {}
 
 Sort::~Sort() {}
 
-void Sort::printList(std::vector<int> list) {
+void Sort::printList(std::vector<int> list) 
+{
   for (int i : list) {
     std::cout << i << " ";
   }
