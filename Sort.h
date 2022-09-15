@@ -1,8 +1,7 @@
-#include "SmartPtr.h"
 #include <iostream>
 #include <vector>
 
-class Sort: public SmartPtr<Sort>
+class Sort
 {
 public:
   Sort();
