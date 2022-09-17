@@ -11,6 +11,7 @@ static void enqueue(int v);
 static int dequeue();
 static bool qSize();
 static std::mutex mtx;
+Node *tree;
 
 void addNumberThread()
 {
@@ -37,19 +38,25 @@ void getNumberThread()
     
     mtx.lock();
     int val = dequeue();
+    tree = BinarySearchTree::insertNode(val,  tree);
+    std::cout<<".";
     mtx.unlock();
-    std::cout<<"Value from Queue: " << val << std::endl;
   }
 }
 
 Producer::Producer()
 {
 }
+
 Producer::~Producer()
 {
   running = false;
   _enQthread.join();
   _deQThread.join();
+    std::cout<<std::endl<<"In order: " << std::endl;
+    BinarySearchTree::inOrderTraversal(tree);
+    std::cout<<std::endl<<"Post order: " << std::endl;
+    BinarySearchTree::postOrderTraversal(tree);
 }
 
 void Producer::doProducing()

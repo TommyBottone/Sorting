@@ -1,4 +1,5 @@
 #include "Singleton.h"
+#include "BinarySearchTree.h"
 #include <vector>
 #include <mutex>
 #include <thread>
@@ -12,5 +13,4 @@ public:
 private:
   std::thread _enQthread;
   std::thread _deQThread;
-
 };
