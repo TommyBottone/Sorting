@@ -80,7 +80,9 @@ Node* BinarySearchTree::removeNode(int val, Node* node)
 
   return node;
 }
-
+//Move all the way left
+//get position
+//Move to the right
 void BinarySearchTree::inOrderTraversal(Node* node)
 {
   if(node != nullptr)
@@ -92,7 +94,9 @@ void BinarySearchTree::inOrderTraversal(Node* node)
     inOrderTraversal(node->right);
   }
 }
-
+//move all the way left
+//move to the right
+//get position
 void BinarySearchTree::postOrderTraversal(Node* node)
 {
   if(node != nullptr)

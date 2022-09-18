@@ -26,6 +26,7 @@ std::vector<int> Sort::createRandomList(int size, int min, int max)
   return retVal;
 }
 
+//Move up the array and then check everything behind if it should be moved there.
 std::vector<int> Sort::doInsertionSort(std::vector<int> list) 
 {
   for (int i = 1; i < list.size(); i++) 
@@ -44,7 +45,7 @@ std::vector<int> Sort::doInsertionSort(std::vector<int> list)
   printList(list);
   return list;
 }
-
+//Move up the list and then find the next value in the list. Then place that value at the current index
 std::vector<int> Sort::doSelectionSort(std::vector<int> list)
 {
   int start = 0;
@@ -70,7 +71,7 @@ std::vector<int> Sort::doSelectionSort(std::vector<int> list)
   return list;
 }
 
-
+//Keep splitting the list and swapping the values in order. Then put it back together.
 std::vector<int> Sort::doMergeSort(std::vector<int> list)
 {
   mergeHelper(list, 0, list.size()-1);
@@ -79,40 +80,40 @@ std::vector<int> Sort::doMergeSort(std::vector<int> list)
   printList(list);
   return list;
 }
-
-void Sort::mergeHelper(std::vector<int> &list, int p, int r)
+//Split the list recursively 
+void Sort::mergeHelper(std::vector<int> &list, int min, int max)
 {
-  if(p < r)
+  if(min < max)
   {
-    int q = (p+r) / 2;
-    mergeHelper(list, p, q);
-    mergeHelper(list, q+1, r);
-    merge(list, p, q, r);
+    int size = (min+max) / 2;
+    mergeHelper(list, min, size);
+    mergeHelper(list, size+1, max);
+    merge(list, min, size, max);
   }
 }
-
-void Sort::merge(std::vector<int> &list, int p, int q, int r)
+//put the list back together
+void Sort::merge(std::vector<int> &list, int min, int size, int max)
 {
-  int sizeL = q - p + 1;
-  int sizeR = r - q;
+  int sizeL = size - min + 1;
+  int sizeR = max - size;
   std::vector<int> left;
   std::vector<int> right;
-  
+
   for(int i = 0; i < sizeL; i++)
   {
-    left.push_back(list[p+i]);
+    left.push_back(list[min+i]);
   }
   
   for(int i = 0; i < sizeR; i++)
   {
-    right.push_back(list[q+i+1]);
+    right.push_back(list[size+i+1]);
   }
-
+  
   int i = 0;
   int j = 0;
-  int k;
-
-  for(k = p; k <= r && i < sizeL && j < sizeR; k++)
+  int k = min;
+  
+  for(k = min; k <= max && i < sizeL && j < sizeR; k++)
   {
     if(left[i] <= right[j])
     {
@@ -139,6 +140,7 @@ void Sort::merge(std::vector<int> &list, int p, int q, int r)
   }
 }
 
+//pivot around a value
 std::vector<int> Sort::doQuickSort(std::vector<int> list)
 {
   quickHelper(list, 0, list.size()-1);
