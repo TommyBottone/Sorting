@@ -13,37 +13,6 @@ static bool qSize();
 static std::mutex mtx;
 Node *tree;
 
-static void addNumberThread()
-{
-  while(running)
-  {
-    std::srand(time(0));
-    int r = rand() % 1000;
-    mtx.lock();
-    enqueue(r);
-    mtx.unlock();
-    std::this_thread::sleep_for(std::chrono::milliseconds(ADD_SLEEP));
-  }
-}
-
-static void getNumberThread()
-{
-  while(running)
-  {
-    if(qSize() == 0)
-    {
-      std::this_thread::sleep_for(std::chrono::milliseconds(GET_SLEEP));
-      continue;
-    }
-    
-    mtx.lock();
-    int val = dequeue();
-    tree = BinarySearchTree::insertNode(val,  tree);
-    std::cerr<<".";
-    mtx.unlock();
-  }
-}
-
 Producer::Producer()
 {
 }
@@ -60,8 +29,40 @@ Producer::~Producer()
 void Producer::doProducing()
 {
   running = true;
-  _threads.push_back(std::async(std::launch::async, addNumberThread));
-  _threads.push_back(std::async(std::launch::async, getNumberThread));
+
+  auto producingThread = []()
+  {
+    while(running)
+    {
+      std::srand(time(0));
+      int r = rand() % 1000;
+      mtx.lock();
+      enqueue(r);
+      mtx.unlock();
+      std::this_thread::sleep_for(std::chrono::milliseconds(ADD_SLEEP));
+    }
+  };
+
+  auto consumingThread = []()
+  {
+    while(running)
+    {
+      if(qSize() == 0)
+      {
+        std::this_thread::sleep_for(std::chrono::milliseconds(GET_SLEEP));
+        continue;
+      }
+      
+      mtx.lock();
+      int val = dequeue();
+      tree = BinarySearchTree::insertNode(val,  tree);
+      std::cerr<<".";
+      mtx.unlock();
+    }
+  };
+  
+  _threads.push_back(std::async(std::launch::async, producingThread));
+  _threads.push_back(std::async(std::launch::async, consumingThread));
 }
 
 void enqueue(int v) 
