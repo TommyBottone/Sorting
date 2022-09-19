@@ -13,7 +13,7 @@ static bool qSize();
 static std::mutex mtx;
 Node *tree;
 
-void addNumberThread()
+static void addNumberThread()
 {
   while(running)
   {
@@ -26,7 +26,7 @@ void addNumberThread()
   }
 }
 
-void getNumberThread()
+static void getNumberThread()
 {
   while(running)
   {
@@ -39,7 +39,7 @@ void getNumberThread()
     mtx.lock();
     int val = dequeue();
     tree = BinarySearchTree::insertNode(val,  tree);
-    std::cout<<".";
+    std::cerr<<".";
     mtx.unlock();
   }
 }
@@ -51,19 +51,17 @@ Producer::Producer()
 Producer::~Producer()
 {
   running = false;
-  _enQthread.join();
-  _deQThread.join();
-    std::cout<<std::endl<<"In order: " << std::endl;
-    BinarySearchTree::inOrderTraversal(tree);
-    std::cout<<std::endl<<"Post order: " << std::endl;
-    BinarySearchTree::postOrderTraversal(tree);
+  std::cout<<std::endl<<"In order: " << std::endl;
+  BinarySearchTree::inOrderTraversal(tree);
+  std::cout<<std::endl<<"Post order: " << std::endl;
+  BinarySearchTree::postOrderTraversal(tree);
 }
 
 void Producer::doProducing()
 {
   running = true;
-  _enQthread = std::thread(&addNumberThread);
-  _deQThread = std::thread(&getNumberThread);
+  _threads.push_back(std::async(std::launch::async, addNumberThread));
+  _threads.push_back(std::async(std::launch::async, getNumberThread));
 }
 
 void enqueue(int v) 

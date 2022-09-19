@@ -3,6 +3,7 @@
 #include <vector>
 #include <mutex>
 #include <thread>
+#include <future>
 
 class Producer : public Singleton
 {
@@ -11,6 +12,5 @@ public:
   ~Producer();
   void doProducing();
 private:
-  std::thread _enQthread;
-  std::thread _deQThread;
+  std::vector<std::future<void>> _threads;
 };

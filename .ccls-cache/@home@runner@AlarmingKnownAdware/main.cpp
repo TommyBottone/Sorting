@@ -21,7 +21,9 @@ char asciitolower(char in)
 int main() 
 { 
   sorting(); 
+  std::cout << std::endl;
   produce();
+  std::cout << std::endl;
   shapes();
   return 0;
 }
@@ -32,14 +34,12 @@ void sorting()
 
   std::vector<int> unsorted = sort->createRandomList();
   std::cout << "Unsorted list: ";
+  
   sort->printList(unsorted);
-
+  
   sort->doInsertionSort(unsorted);
-
   sort->doSelectionSort(unsorted);
-
   sort->doMergeSort(unsorted);
-
   sort->doQuickSort(unsorted);
 }
 
@@ -57,7 +57,15 @@ void produce()
   }
 }
 
-void shapes()
+void ForEach(const std::vector<Shape> shapes, void(*func)(std::string))
+{
+  for(auto shape : shapes)
+  {
+    func(shape.toString());
+  }
+}
+
+std::vector<Shape> generateShapes()
 {
   std::vector<Shape> shapes;
   std::srand(time(0));
@@ -92,9 +100,15 @@ void shapes()
       }
     }
   }
+  return shapes;
+}
 
-  for(auto s : shapes)
-  {
-    std::cout << "Shape: " + s.toString() << std::endl;
-  }
+void shapes()
+{
+  auto shapes = generateShapes();
+  
+  auto lambda = [](std::string shapeString){std::cout << "Shape: " << shapeString << std::endl;};
+  
+  ForEach(shapes, lambda);
+  
 }
