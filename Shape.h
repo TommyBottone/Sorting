@@ -1,5 +1,8 @@
 #include <iostream>
 #include <map>
+
+static const float PI = 3.14159;
+
 class Shape
 {
 public:
@@ -17,6 +20,8 @@ public:
   const inline SHAPE_TYPE getType(){return _type;}
   ~Shape();
   std::string toString();
+  virtual const float perimeter();
+  virtual const float area() ;
 private:
   void initializeMap();
   std::map<SHAPE_TYPE, std::string> _shapeMap;
@@ -31,6 +36,8 @@ public:
   ~Circle();
   inline void setRadius(int radius){_radius = radius;}
   const inline float getRadius(){return _radius;}
+  const float perimeter();
+  const float area();
 private:
   float _radius;
 };
@@ -43,6 +50,13 @@ public:
   ~Line();
   inline void setLength(float length){_length = length;}
   const inline float getLength(){return _length;}
+  inline float operator+(float length) {_length += length; return _length;}
+  inline bool operator==(Line line)
+  {
+     return line.getLength() == _length; 
+  }
+  const float perimeter(){return 0;};
+  const float area(){return 0;};
 private:
   float _length;
 };
@@ -65,6 +79,14 @@ public:
     side2 = _side2;
     side3 = _side3;
   }
+  inline bool operator==(Triangle t)
+  {
+    float s1, s2, s3;
+    t.getDimensions(s1,s2,s3);
+    
+    return _side1 == s1 && _side2 == s2 && _side3 == s3;
+  }
+  const float perimeter();
 private:
   float _side1;
   float _side2;
@@ -83,10 +105,20 @@ public:
     _width = width;
   }
   void getDimensions(float &length, float &width)
-{
-  length = _length;
-  width = _width;
-}
+  {
+    length = _length;
+    width = _width;
+  }
+
+  inline bool operator==(Rectangle r)
+  {
+    float l, w;
+    r.getDimensions(l, w);
+    
+    return _length == l && _width == w;
+  }
+  const float perimeter();
+  const float area();
 private:
   float _length;
   float _width;

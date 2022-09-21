@@ -43,6 +43,25 @@ Circle::~Circle()
   
 }
 
+const float Circle::perimeter()
+{
+  float perimeter = 0;
+
+  perimeter = PI * 2 * _radius;
+  //this is pretty much a circumference
+
+  return perimeter;
+}
+
+const float Circle::area()
+{
+  float area = 0;
+
+  area = PI * (_radius * _radius);
+
+  return area;
+}
+
 Line::Line(): Shape(LINE)
 {
   
@@ -56,6 +75,8 @@ Line::~Line()
 {
   
 }
+
+
 
 Triangle::Triangle(): Shape(TRIANGLE)
 {
@@ -75,6 +96,17 @@ Triangle::~Triangle()
   
 }
 
+
+const float Triangle::perimeter()
+{
+  float perimeter = 0;
+
+  perimeter = _side1 + _side2 + _side3;
+
+  return perimeter;
+}
+
+
 Rectangle::Rectangle():Shape(RECTANGLE)
 {
   
@@ -91,4 +123,22 @@ _width(width)
 Rectangle::~Rectangle()
 {
   
+}
+
+const float Rectangle::perimeter()
+{
+  float perimeter = 0;
+
+  perimeter = (_length * 2) + (_width * 2);
+
+  return perimeter;
+}
+
+const float Rectangle::area()
+{
+  float area = 0;
+
+  area = _length * _width;
+
+  return area;
 }
