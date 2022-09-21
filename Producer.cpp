@@ -7,8 +7,6 @@ static const int GET_SLEEP  = 5000;
 
 static bool running = false;
 static std::vector<int> q;
-static void enqueue(int v);
-static int dequeue();
 static bool qSize();
 static std::mutex mtx;
 Node *tree;
@@ -37,7 +35,7 @@ void Producer::doProducing()
       std::srand(time(0));
       int r = rand() % 1000;
       mtx.lock();
-      enqueue(r);
+      q.push_back(r); 
       mtx.unlock();
       std::this_thread::sleep_for(std::chrono::milliseconds(ADD_SLEEP));
     }
@@ -47,16 +45,22 @@ void Producer::doProducing()
   {
     while(running)
     {
-      if(qSize() == 0)
+      if(!qSize())
       {
         std::this_thread::sleep_for(std::chrono::milliseconds(GET_SLEEP));
         continue;
       }
       
       mtx.lock();
-      int val = dequeue();
-      tree = BinarySearchTree::insertNode(val,  tree);
-      std::cerr<<".";
+
+        
+      if(qSize())
+      {
+        int val = q[0];
+        tree = BinarySearchTree::insertNode(val,  tree);
+        std::cerr<<".";
+        q.erase(q.begin());
+      }
       mtx.unlock();
     }
   };
@@ -65,25 +69,7 @@ void Producer::doProducing()
   _threads.push_back(std::async(std::launch::async, consumingThread));
 }
 
-void enqueue(int v) 
-{ 
-  q.push_back(v); 
-}
-
-int dequeue() 
-{
-  int retVal = 0;
-  
-  if(q.size() > 0)
-  {
-    retVal = q[0];
-    q.erase(q.begin());
-  }
-  
-  return retVal;
-}
-
 bool qSize()
 {
-  return q.size();
+  return q.size() > 0 ? true : false;
 }

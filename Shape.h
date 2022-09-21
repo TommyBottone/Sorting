@@ -20,8 +20,8 @@ public:
   const inline SHAPE_TYPE getType(){return _type;}
   ~Shape();
   std::string toString();
-  virtual const float perimeter();
-  virtual const float area() ;
+  virtual const float perimeter(){}
+  virtual const float area(){}
 private:
   void initializeMap();
   std::map<SHAPE_TYPE, std::string> _shapeMap;
@@ -87,6 +87,7 @@ public:
     return _side1 == s1 && _side2 == s2 && _side3 == s3;
   }
   const float perimeter();
+const float area() {return 0; /*NGL kinda difficult without height*/};
 private:
   float _side1;
   float _side2;
