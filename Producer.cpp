@@ -35,7 +35,7 @@ void Producer::doProducing()
       std::srand(time(0));
       int r = rand() % 1000;
       mtx.lock();
-      q.push_back(r); 
+      q.emplace_back(r); 
       mtx.unlock();
       std::this_thread::sleep_for(std::chrono::milliseconds(ADD_SLEEP));
     }
@@ -65,8 +65,8 @@ void Producer::doProducing()
     }
   };
   
-  _threads.push_back(std::async(std::launch::async, producingThread));
-  _threads.push_back(std::async(std::launch::async, consumingThread));
+  _threads.emplace_back(std::async(std::launch::async, producingThread));
+  _threads.emplace_back(std::async(std::launch::async, consumingThread));
 }
 
 bool qSize()

@@ -36,11 +36,27 @@ void sorting()
   std::cout << "Unsorted list: ";
   
   sort->printList(unsorted);
-  
-  sort->doInsertionSort(unsorted);
-  sort->doSelectionSort(unsorted);
-  sort->doMergeSort(unsorted);
-  sort->doQuickSort(unsorted);
+
+  std::async(std::launch::async,
+  [&sort, unsorted]()
+  {
+    sort->doInsertionSort(unsorted);
+  });
+  std::async(std::launch::async,
+  [&sort, unsorted]()
+  {
+    sort->doSelectionSort(unsorted);
+  });
+  std::async(std::launch::async,
+  [&sort, unsorted]()
+  {
+    sort->doMergeSort(unsorted);
+  });
+  std::async(std::launch::async,
+  [&sort, unsorted]()
+  {
+    sort->doQuickSort(unsorted);
+  });
 }
 
 void produce()
@@ -77,25 +93,25 @@ std::vector<Shape> generateShapes()
       case Shape::CIRCLE:
       {
         Circle c;
-        shapes.push_back(c);
+        shapes.emplace_back(c);
         break;
       }
       case Shape::LINE:
       {
         Line l;
-        shapes.push_back(l);
+        shapes.emplace_back(l);
         break;
       }
       case Shape::TRIANGLE:
       {
         Triangle t;
-        shapes.push_back(t);
+        shapes.emplace_back(t);
         break;
       }
       case Shape::RECTANGLE:
       {
         Rectangle r;
-        shapes.push_back(r);
+        shapes.emplace_back(r);
         break;
       }
     }

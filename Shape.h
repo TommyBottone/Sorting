@@ -67,7 +67,7 @@ public:
   Triangle();
   Triangle(float side1, float side2, float side3);
   ~Triangle();
-  inline void setDimensions(float side1, float side2, float side3)
+  inline void setDimensions(const float &side1, const float &side2, const float &side3)
   {
     _side1 = side1;
     _side2 = side2;
@@ -100,7 +100,7 @@ public:
   Rectangle();
   Rectangle(float length, float width);
   ~Rectangle();
-  void setDimensions(float length, float width)
+  void setDimensions(const float &length, const float &width)
   {
     _length = length;
     _width = width;
