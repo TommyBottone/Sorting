@@ -1,9 +1,10 @@
 #include <iostream>
 #include <map>
+#include "MemTrack.h"
 
 static const float PI = 3.14159;
 
-class Shape
+class Shape: public MemTracker
 {
 public:
   enum SHAPE_TYPE

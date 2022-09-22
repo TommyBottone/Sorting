@@ -1,7 +1,8 @@
 #include <iostream>
 #include <vector>
 
-class Sort {
+class Sort 
+{
 public:
   Sort();
   ~Sort();

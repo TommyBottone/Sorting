@@ -126,5 +126,10 @@ void shapes()
   auto lambda = [](std::string shapeString){std::cout << "Shape: " << shapeString << std::endl;};
   
   ForEach(shapes, lambda);
+
+
+  Triangle* memShape = new Triangle();
+  delete memShape;
+  
   
 }
