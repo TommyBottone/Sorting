@@ -88,7 +88,7 @@ void BinarySearchTree::inOrderTraversal(Node* node)
   if(node != nullptr)
   {
     inOrderTraversal(node->left);
-
+    
     std::cout << node->data << " -> ";
 
     inOrderTraversal(node->right);

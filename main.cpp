@@ -63,10 +63,11 @@ void produce()
 {
   SmartPtr<Producer> prod(new Producer());
   prod->doProducing();
+  
   std::string val;
   while(val != "exit")
   {
-    std::cout << "Type exit to exit" << std::endl;
+    std::cout << "Type exit to exit\n";
     std::cin >> val;
     std::transform(val.begin(), val.end(), val.begin(), asciitolower);
     break;
@@ -123,7 +124,7 @@ void shapes()
 {
   auto shapes = generateShapes();
   
-  auto lambda = [](std::string shapeString){std::cout << "Shape: " << shapeString << std::endl;};
+  auto lambda = [](std::string shapeString){std::cout << "Shape: " << shapeString << "\n";};
   
   ForEach(shapes, lambda);
 

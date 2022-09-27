@@ -18,9 +18,9 @@ Producer::Producer()
 Producer::~Producer()
 {
   running = false;
-  std::cout<<std::endl<<"In order: " << std::endl;
+  std::cout<<"\nIn order: \n";
   BinarySearchTree::inOrderTraversal(tree);
-  std::cout<<std::endl<<"Post order: " << std::endl;
+  std::cout<<"\nPost order: \n";
   BinarySearchTree::postOrderTraversal(tree);
 }
 
@@ -32,10 +32,8 @@ void Producer::doProducing()
   {
     while(running)
     {
-      std::srand(time(0));
-      int r = rand() % 1000;
       mtx.lock();
-      q.emplace_back(r); 
+      q.emplace_back(RandomIntGenerator::instance().rNum()); 
       mtx.unlock();
       std::this_thread::sleep_for(std::chrono::milliseconds(ADD_SLEEP));
     }

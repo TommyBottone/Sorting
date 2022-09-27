@@ -8,10 +8,11 @@ void Sort::printList(const std::vector<int> &list) {
   for (int i : list) {
     std::cout << i << " ";
   }
-  std::cout << std::endl;
+  std::cout << "\n";
 }
 
-std::vector<int> Sort::createRandomList(const int &size, const int &min, const int &max) {
+std::vector<int> Sort::createRandomList(const int &size, const int &min,
+                                        const int &max) {
   std::vector<int> retVal;
 
   std::srand(time(0));
@@ -72,6 +73,7 @@ std::vector<int> Sort::doMergeSort(std::vector<int> list) {
   printList(list);
   return list;
 }
+
 // Split the list recursively
 void Sort::mergeHelper(std::vector<int> &list, const int &min, const int &max) {
   if (min < max) {
@@ -81,8 +83,10 @@ void Sort::mergeHelper(std::vector<int> &list, const int &min, const int &max) {
     merge(list, min, size, max);
   }
 }
+
 // put the list back together
-void Sort::merge(std::vector<int> &list, const int &min, const int &size, const int &max) {
+void Sort::merge(std::vector<int> &list, const int &min, const int &size,
+                 const int &max) {
   int sizeL = size - min + 1;
   int sizeR = max - size;
   std::vector<int> left;
@@ -138,7 +142,8 @@ void Sort::quickHelper(std::vector<int> &list, const int &startIdx, const int &e
   }
 }
 
-int Sort::quickSplit(std::vector<int> &list, const int &startIdx, const int &endIdx) {
+int Sort::quickSplit(std::vector<int> &list, const int &startIdx,
+                     const int &endIdx) {
   int retVal = 0;
   int x = list[endIdx];
   int i = startIdx - 1;

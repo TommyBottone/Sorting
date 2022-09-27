@@ -1,15 +1,14 @@
-class Singleton
-{
+
+template<typename T>
+class Singleton {
 public:
-  static Singleton* getInstance()
-  {
-    if(_instance == nullptr)
-    {
-      _instance = new Singleton();
+  static T *getInstance() {
+    if (_instance == nullptr) {
+      _instance = new T();
     }
     return _instance;
   }
 
 private:
-  static Singleton* _instance;
+  static T *_instance;
 };
