@@ -9,15 +9,6 @@ void sorting();
 void produce();
 void shapes();
 
-char asciitolower(char in)
-{
-  if(in <= 'Z' && in >= 'A')
-  {
-    return in - ('Z' - 'z');
-  }
-  return in;
-}
-
 int main() 
 { 
   sorting(); 
@@ -69,7 +60,12 @@ void produce()
   {
     std::cout << "Type exit to exit\n";
     std::cin >> val;
-    std::transform(val.begin(), val.end(), val.begin(), asciitolower);
+    
+    std::transform(val.begin(), val.end(), val.begin(),
+        [](unsigned char c){ 
+            return std::tolower(c); 
+    });
+    
     break;
   }
 }
